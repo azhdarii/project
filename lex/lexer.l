@@ -1,59 +1,89 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "parser.tab.h" 
 
-// Declare global variables or helper functions here if needed
+
+
+
 %}
 
 %option noyywrap
 
-// Regular definitions
-digit       [0-9]
-number      {digit}+(\.{digit}+)?
+
+digit [0-9]
+letter [A-Za-z]
+id {letter}({letter}|{digit})*
+ws [ \t\n]+
+number [+-]?{digit}+ 
+semicolon [;]
 
 %%
 
-// Match numbers and handle multiples of 10
-{number}    { 
-                int num = atoi(yytext);
-                if (num % 10 == 0) {
-                    int reversed = 0;
-                    while (num != 0) {
-                        reversed = reversed * 10 + num % 10;
-                        num /= 10;
-                    }
-                    printf("Reversed Number: %d\n", reversed);
-                } else {
-                    printf("Number: %s\n", yytext);
-                }
-                return NUMBER;
-            }
+{id} { 
+    printf("Identifier: %s\n", yytext); 
+    return ID; 
+}
 
-// Match operators
-"+"         { printf("Operator: +\n"); return '+'; }
-"-"         { printf("Operator: -\n"); return '-'; }
-"*"         { printf("Operator: *\n"); return '*'; }
-"/"         { printf("Operator: /\n"); return '/'; }
+{number} { 
+    int num = atoi(yytext);
+    if (num % 10 == 0) {
+        printf("Number: %s\n", yytext);
+        yylval.num = num; 
+    } else {
+        int reversed = 0, original = num;
+        while (original != 0) {
+            reversed = reversed * 10 + original % 10;
+            original /= 10;
+        }
+        printf("Reversed Number: %d\n", reversed);
+        yylval.num = reversed; 
+    }
+    return NUMBER;
+}
 
-// Match parentheses
-"("         { printf("Left Parenthesis: (\n"); return '('; }
-")"         { printf("Right Parenthesis: )\n"); return ')'; }
+"=" {  
+    printf("Operator: =\n");  
+    return '='; 
+}
+"+" { 
+    printf("Operator: +\n"); 
+    return '+'; 
+}
+"-" { 
+    printf("Operator: -\n"); 
+    return '-'; 
+}
+"*" { 
+    printf("Operator: *\n"); 
+    return '*'; 
+}
+"/" { 
+    printf("Operator: /\n"); 
+    return '/'; 
+}
 
-// Ignore whitespace
-[ \t\n]+    { /* Ignore whitespace */ }
+"(" { 
+    printf("Left Parenthesis: (\n"); 
+    return '('; 
+}
+")" { 
+    printf("Right Parenthesis: )\n"); 
+    return ')'; 
+}
 
-// Handle invalid characters
-.           { printf("Unexpected character: %s\n", yytext); }
+{ws} { 
+    /* Ignore whitespace */ 
+}
+
+{semicolon} {
+    printf("semicolon\n");
+}
+
+. { 
+    printf("Unexpected character: %s\n", yytext); 
+}
 
 %%
 
-// Main function to initialize lexical analysis
-int main() {
-    yylex(); // Start lexical analysis
-    return 0;
-}
 
-// Error handler
-void yyerror(const char *s) {
-    fprintf(stderr, "Error: %s\n", s);
-}
