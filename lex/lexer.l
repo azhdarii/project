@@ -21,14 +21,12 @@ semicolon [;]
 %%
 
 {id} { 
-    printf("Identifier: %s\n", yytext); 
     return ID; 
 }
 
 {number} { 
     int num = atoi(yytext);
     if (num % 10 == 0) {
-        printf("Number: %s\n", yytext);
         yylval.num = num; 
     } else {
         int reversed = 0, original = num;
@@ -36,39 +34,31 @@ semicolon [;]
             reversed = reversed * 10 + original % 10;
             original /= 10;
         }
-        printf("Reversed Number: %d\n", reversed);
         yylval.num = reversed; 
     }
     return NUMBER;
 }
 
 "=" {  
-    printf("Operator: =\n");  
     return '='; 
 }
 "+" { 
-    printf("Operator: +\n"); 
     return '+'; 
 }
 "-" { 
-    printf("Operator: -\n"); 
     return '-'; 
 }
 "*" { 
-    printf("Operator: *\n"); 
     return '*'; 
 }
 "/" { 
-    printf("Operator: /\n"); 
     return '/'; 
 }
 
 "(" { 
-    printf("Left Parenthesis: (\n"); 
     return '('; 
 }
 ")" { 
-    printf("Right Parenthesis: )\n"); 
     return ')'; 
 }
 
@@ -77,7 +67,7 @@ semicolon [;]
 }
 
 {semicolon} {
-    printf("semicolon\n");
+    return ';';
 }
 
 . { 

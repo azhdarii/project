@@ -41,30 +41,30 @@ extern char *yytext;
 
 %%
 
-program:
-    program statement
-    | /* empty */
-    ;
 
-statement:
+
+
+   
+
+expr:
+
     ID '=' expr ';' {
         printf("%s = %s\n", $1, $3.code); // Generate three-address code
         printf("Value of %s: %f\n", $1, $3.value); // Output computed value
         free($3.code); // Free allocated memory
     }
-    ;
-
-expr:
-    expr '+' expr {
+    |expr '+' expr {
         char* temp = new_temp();
-        printf("%s = %s + %s\n", temp, $1.code, $3.code); // Generate three-address code
-        $$ = (struct expr_data) {temp, $1.value + $3.value}; // Compute value
+        printf("%s = %s + %s\n", temp, $1.code, $3.code);
+        printf( "sum: %f\n",$1.value + $3.value); 
+        $$ = (struct expr_data) {temp, $1.value + $3.value}; 
         free($1.code);
         free($3.code);
     }
     | expr '-' expr {
         char* temp = new_temp();
         printf("%s = %s - %s\n", temp, $1.code, $3.code);
+        printf( "sub: %f\n",$1.value - $3.value);
         $$ = (struct expr_data) {temp, $1.value - $3.value};
         free($1.code);
         free($3.code);
@@ -72,6 +72,7 @@ expr:
     | expr '*' expr {
         char* temp = new_temp();
         printf("%s = %s * %s\n", temp, $1.code, $3.code);
+        printf( "mul: %f\n",$1.value * $3.value);
         $$ = (struct expr_data) {temp, $1.value * $3.value};
         free($1.code);
         free($3.code);
@@ -83,6 +84,7 @@ expr:
         }
         char* temp = new_temp();
         printf("%s = %s / %s\n", temp, $1.code, $3.code);
+        printf( "div: %f\n",$1.value / $3.value);
         $$ = (struct expr_data) {temp, $1.value / $3.value};
         free($1.code);
         free($3.code);
