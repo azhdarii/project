@@ -1,9 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-// Temporary variable counter
 int temp_count = 0;
 
 // Function to generate a new temporary variable
@@ -13,7 +11,7 @@ char* new_temp() {
     return temp;
 }
 
-// Forward declaration of yylex()
+// Forward declaration
 int yylex();
 void yyerror(const char *s);
 
@@ -24,86 +22,90 @@ extern char *yytext;
 %token ID NUMBER
 %right '+' '-'
 %left '*' '/'
-%right '='
 
 %union {
     struct expr_data {
         char* code;   // Temporary variable or value
-        double value; // Computed values
+        double value; // Computed value (if applicable)
     } expr_data;
-    char* id;        // For identifiers
-    double num;      // For numeric values
+    double num;
 }
 
-%type <expr_data> expr
-%type <id> ID
+%type <expr_data> expr term factor
+%type <expr_data> stmt
 %type <num> NUMBER
 
 %%
 
+stmt:
+    ID '=' expr ';' {
 
-
-
-   
+       
+        char* temp = new_temp();
+        printf("Three-Address Code: %s = %s\n", $1, $3.code);
+        printf("Result: %f\n", $3.value);
+        free($3.code);
+    }
+    ;
 
 expr:
-
-    ID '=' expr ';' {
-        printf("%s = %s\n", $1, $3.code); // Generate three-address code
-        printf("Value of %s: %f\n", $1, $3.value); // Output computed value
-        free($3.code); // Free allocated memory
-    }
-    |expr '+' expr {
+    term '+' expr {
         char* temp = new_temp();
-        printf("%s = %s + %s\n", temp, $1.code, $3.code);
-        printf( "sum: %f\n",$1.value + $3.value); 
-        $$ = (struct expr_data) {temp, $1.value + $3.value}; 
+        printf("Three-Address Code: %s = %s + %s\n", temp, $1.code, $3.code);
+        $$ = (struct expr_data) {temp, $1.value + $3.value};
         free($1.code);
         free($3.code);
     }
-    | expr '-' expr {
+    | term '-' expr {
         char* temp = new_temp();
-        printf("%s = %s - %s\n", temp, $1.code, $3.code);
-        printf( "sub: %f\n",$1.value - $3.value);
+        printf("Three-Address Code: %s = %s - %s\n", temp, $1.code, $3.code);
         $$ = (struct expr_data) {temp, $1.value - $3.value};
         free($1.code);
         free($3.code);
     }
-    | expr '*' expr {
+    | term {
+        $$ = $1;
+    }
+    ;
+
+term:
+    term '*' factor {
         char* temp = new_temp();
-        printf("%s = %s * %s\n", temp, $1.code, $3.code);
-        printf( "mul: %f\n",$1.value * $3.value);
+        printf("Three-Address Code: %s = %s * %s\n", temp, $1.code, $3.code);
         $$ = (struct expr_data) {temp, $1.value * $3.value};
         free($1.code);
         free($3.code);
     }
-    | expr '/' expr {
+    | term '/' factor {
         if ($3.value == 0) {
-            fprintf(stderr, "Error: Division by zero\n");
-            exit(1);
+            yyerror("Division by zero");
+            $$ = (struct expr_data) {strdup("error"), 0.0};
+        } else {
+            char* temp = new_temp();
+            printf("Three-Address Code: %s = %s / %s\n", temp, $1.code, $3.code);
+            $$ = (struct expr_data) {temp, $1.value / $3.value};
         }
-        char* temp = new_temp();
-        printf("%s = %s / %s\n", temp, $1.code, $3.code);
-        printf( "div: %f\n",$1.value / $3.value);
-        $$ = (struct expr_data) {temp, $1.value / $3.value};
         free($1.code);
         free($3.code);
     }
-    | '(' expr ')' {
+    | factor {
+        $$ = $1;
+    }
+    ;
+
+factor:
+    '(' expr ')' {
         $$ = $2;
     }
     | NUMBER {
-        $$ = (struct expr_data) {strdup(yytext), atof(yytext)};
-    }
-    | ID {
-        $$ = (struct expr_data) {strdup(yytext), 0.0}; // Default value for ID
+        $$ = (struct expr_data) {strdup(yytext), $1};
     }
     ;
 
 %%
 
 int main() {
-    printf("Enter input for lexical analysis:\n");
+    printf("Enter an assignment expression (e.g., x = 3 + 2 * (4 - 1);):\n");
     yyparse();
     return 0;
 }
