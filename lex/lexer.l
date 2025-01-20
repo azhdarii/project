@@ -12,10 +12,10 @@
 
 
 digit [0-9]
+number [+-]?{digit}+ 
 letter [A-Za-z]
 id {letter}({letter}|{digit})*
 ws [ \t\n]+
-number [+-]?{digit}+ 
 semicolon [;]
 
 %%

@@ -527,8 +527,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    41,    41,    50,    57,    64,    70,    77,    89,    95,
-      98
+       0,    42,    42,    53,    60,    67,    73,    80,    92,    98,
+     101
 };
 #endif
 
@@ -1325,18 +1325,20 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 41 "parser.y"
+#line 42 "parser.y"
                     {
+
+       
         char* temp = new_temp();
-        // printf("Three-Address Code: %s = %s\n", $1, $3.code);
+        printf("Three-Address Code: %s = %s\n",(yyvsp[-3].lexeme).lexeme , (yyvsp[-1].expr_data).code);
         printf("Result: %f\n", (yyvsp[-1].expr_data).value);
         free((yyvsp[-1].expr_data).code);
     }
-#line 1336 "parser.tab.c"
+#line 1338 "parser.tab.c"
     break;
 
   case 3:
-#line 50 "parser.y"
+#line 53 "parser.y"
                   {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s + %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
@@ -1344,11 +1346,11 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1348 "parser.tab.c"
+#line 1350 "parser.tab.c"
     break;
 
   case 4:
-#line 57 "parser.y"
+#line 60 "parser.y"
                     {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s - %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
@@ -1356,19 +1358,19 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1360 "parser.tab.c"
+#line 1362 "parser.tab.c"
     break;
 
   case 5:
-#line 64 "parser.y"
+#line 67 "parser.y"
            {
         (yyval.expr_data) = (yyvsp[0].expr_data);
     }
-#line 1368 "parser.tab.c"
+#line 1370 "parser.tab.c"
     break;
 
   case 6:
-#line 70 "parser.y"
+#line 73 "parser.y"
                     {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s * %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
@@ -1376,11 +1378,11 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1380 "parser.tab.c"
+#line 1382 "parser.tab.c"
     break;
 
   case 7:
-#line 77 "parser.y"
+#line 80 "parser.y"
                       {
         if ((yyvsp[0].expr_data).value == 0) {
             yyerror("Division by zero");
@@ -1393,35 +1395,35 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1397 "parser.tab.c"
+#line 1399 "parser.tab.c"
     break;
 
   case 8:
-#line 89 "parser.y"
+#line 92 "parser.y"
              {
         (yyval.expr_data) = (yyvsp[0].expr_data);
     }
-#line 1405 "parser.tab.c"
+#line 1407 "parser.tab.c"
     break;
 
   case 9:
-#line 95 "parser.y"
+#line 98 "parser.y"
                  {
         (yyval.expr_data) = (yyvsp[-1].expr_data);
     }
-#line 1413 "parser.tab.c"
+#line 1415 "parser.tab.c"
     break;
 
   case 10:
-#line 98 "parser.y"
+#line 101 "parser.y"
              {
         (yyval.expr_data) = (struct expr_data) {strdup(yytext), (yyvsp[0].num)};
     }
-#line 1421 "parser.tab.c"
+#line 1423 "parser.tab.c"
     break;
 
 
-#line 1425 "parser.tab.c"
+#line 1427 "parser.tab.c"
 
       default: break;
     }
@@ -1653,7 +1655,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 103 "parser.y"
+#line 106 "parser.y"
 
 
 int main() {

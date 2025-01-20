@@ -35,6 +35,7 @@ extern char *yytext;
 %type <expr_data> stmt
 %type <num> NUMBER
 
+
 %%
 
 stmt:
@@ -42,7 +43,7 @@ stmt:
 
        
         char* temp = new_temp();
-        printf("Three-Address Code: %s = %s\n", $1, $3.code);
+        printf("Three-Address Code: %s = %s\n",$1 , $3.code);
         printf("Result: %f\n", $3.value);
         free($3.code);
     }
