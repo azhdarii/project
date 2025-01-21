@@ -151,8 +151,9 @@ union YYSTYPE
         double value; // Computed value (if applicable)
     } expr_data;
     double num;
+    char* id; 
 
-#line 156 "parser.tab.c"
+#line 157 "parser.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -471,7 +472,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   15
+#define YYLAST   17
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  13
@@ -527,8 +528,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    42,    42,    53,    60,    67,    73,    80,    92,    98,
-     101
+       0,    44,    44,    55,    62,    69,    75,    82,    94,   100,
+     103
 };
 #endif
 
@@ -553,7 +554,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-13)
+#define YYPACT_NINF (-6)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -567,9 +568,9 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       1,    -4,    13,    -3,   -13,   -13,    -3,     5,     4,   -13,
-       2,   -13,    -3,    -3,    -3,    -3,   -13,   -13,   -13,   -13,
-     -13
+       5,     6,    11,    -2,    -6,    -6,    -2,     0,    -4,    -6,
+      -5,    -2,    -2,    -6,    -2,    -2,    -6,    -4,    -4,    -6,
+      -6
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -578,14 +579,14 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     1,    10,     0,     0,     5,     8,
-       0,     2,     0,     0,     0,     0,     9,     3,     4,     6,
+       0,     0,     0,     2,     0,     0,     9,     3,     4,     6,
        7
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -13,   -13,    -6,   -13,   -12
+      -6,    -6,     8,     1,     2
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -599,14 +600,14 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      10,     5,    19,    20,     1,     3,    17,    18,     6,    12,
-      13,    14,    15,     4,    16,    11
+      11,    12,     5,    14,    15,    11,    12,    16,     1,     6,
+      13,     4,    17,    18,    10,     3,    19,    20
 };
 
 static const yytype_int8 yycheck[] =
 {
-       6,     4,    14,    15,     3,     9,    12,    13,    11,     5,
-       6,     7,     8,     0,    12,    10
+       5,     6,     4,     7,     8,     5,     6,    12,     3,    11,
+      10,     0,    11,    12,     6,     9,    14,    15
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -614,7 +615,7 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    14,     9,     0,     4,    11,    15,    16,    17,
-      15,    10,     5,     6,     7,     8,    12,    15,    15,    17,
+      15,     5,     6,    10,     7,     8,    12,    16,    16,    17,
       17
 };
 
@@ -1325,20 +1326,20 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 42 "parser.y"
+#line 44 "parser.y"
                     {
 
        
         char* temp = new_temp();
-        printf("Three-Address Code: %s = %s\n",(yyvsp[-3].lexeme).lexeme , (yyvsp[-1].expr_data).code);
+        printf("Three-Address Code: %s = %s\n",(yyvsp[-3].id) , (yyvsp[-1].expr_data).code);
         printf("Result: %f\n", (yyvsp[-1].expr_data).value);
         free((yyvsp[-1].expr_data).code);
     }
-#line 1338 "parser.tab.c"
+#line 1339 "parser.tab.c"
     break;
 
   case 3:
-#line 53 "parser.y"
+#line 55 "parser.y"
                   {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s + %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
@@ -1346,11 +1347,11 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1350 "parser.tab.c"
+#line 1351 "parser.tab.c"
     break;
 
   case 4:
-#line 60 "parser.y"
+#line 62 "parser.y"
                     {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s - %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
@@ -1358,19 +1359,19 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1362 "parser.tab.c"
+#line 1363 "parser.tab.c"
     break;
 
   case 5:
-#line 67 "parser.y"
+#line 69 "parser.y"
            {
         (yyval.expr_data) = (yyvsp[0].expr_data);
     }
-#line 1370 "parser.tab.c"
+#line 1371 "parser.tab.c"
     break;
 
   case 6:
-#line 73 "parser.y"
+#line 75 "parser.y"
                     {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s * %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
@@ -1378,11 +1379,11 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1382 "parser.tab.c"
+#line 1383 "parser.tab.c"
     break;
 
   case 7:
-#line 80 "parser.y"
+#line 82 "parser.y"
                       {
         if ((yyvsp[0].expr_data).value == 0) {
             yyerror("Division by zero");
@@ -1395,35 +1396,35 @@ yyreduce:
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1399 "parser.tab.c"
+#line 1400 "parser.tab.c"
     break;
 
   case 8:
-#line 92 "parser.y"
+#line 94 "parser.y"
              {
         (yyval.expr_data) = (yyvsp[0].expr_data);
     }
-#line 1407 "parser.tab.c"
+#line 1408 "parser.tab.c"
     break;
 
   case 9:
-#line 98 "parser.y"
+#line 100 "parser.y"
                  {
         (yyval.expr_data) = (yyvsp[-1].expr_data);
     }
-#line 1415 "parser.tab.c"
+#line 1416 "parser.tab.c"
     break;
 
   case 10:
-#line 101 "parser.y"
+#line 103 "parser.y"
              {
         (yyval.expr_data) = (struct expr_data) {strdup(yytext), (yyvsp[0].num)};
     }
-#line 1423 "parser.tab.c"
+#line 1424 "parser.tab.c"
     break;
 
 
-#line 1427 "parser.tab.c"
+#line 1428 "parser.tab.c"
 
       default: break;
     }
@@ -1655,7 +1656,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 106 "parser.y"
+#line 108 "parser.y"
 
 
 int main() {

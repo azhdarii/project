@@ -742,12 +742,13 @@ case 1:
 YY_RULE_SETUP
 #line 23 "lexer.l"
 { 
+    yylval.id=strdup(yytext);
     return ID; 
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 28 "lexer.l"
 { 
     int num = atoi(yytext);
     if (num % 10 == 0) {
@@ -765,49 +766,49 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 42 "lexer.l"
+#line 43 "lexer.l"
 {  
     return '='; 
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 46 "lexer.l"
 { 
     return '+'; 
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 48 "lexer.l"
+#line 49 "lexer.l"
 { 
     return '-'; 
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 52 "lexer.l"
 { 
     return '*'; 
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 54 "lexer.l"
+#line 55 "lexer.l"
 { 
     return '/'; 
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 58 "lexer.l"
+#line 59 "lexer.l"
 { 
     return '('; 
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 61 "lexer.l"
+#line 62 "lexer.l"
 { 
     return ')'; 
 }
@@ -815,31 +816,31 @@ YY_RULE_SETUP
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 65 "lexer.l"
+#line 66 "lexer.l"
 { 
     /* Ignore whitespace */ 
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 69 "lexer.l"
+#line 70 "lexer.l"
 {
     return ';';
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 74 "lexer.l"
 { 
     printf("Unexpected character: %s\n", yytext); 
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 78 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 843 "lex.yy.c"
+#line 844 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1844,7 +1845,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 77 "lexer.l"
+#line 78 "lexer.l"
 
 
 

@@ -29,11 +29,13 @@ extern char *yytext;
         double value; // Computed value (if applicable)
     } expr_data;
     double num;
+    char* id; 
 }
 
 %type <expr_data> expr term factor
 %type <expr_data> stmt
 %type <num> NUMBER
+%type <id> ID
 
 
 %%

@@ -65,8 +65,9 @@ union YYSTYPE
         double value; // Computed value (if applicable)
     } expr_data;
     double num;
+    char* id; 
 
-#line 70 "parser.tab.h"
+#line 71 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

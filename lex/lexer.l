@@ -21,6 +21,7 @@ semicolon [;]
 %%
 
 {id} { 
+    yylval.id=strdup(yytext);
     return ID; 
 }
 
