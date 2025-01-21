@@ -1,0 +1,112 @@
+Running tests for the parser
+---------------------------------
+Test 1: a = 3 + 4;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 3 + 4
+Three-Address Code: a = t0
+Result: 7
+---------------------------------
+Test 2: b = 10 - 5;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 10 - 5
+Three-Address Code: b = t0
+Result: 5
+---------------------------------
+Test 3: c = 6 * 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 6 * 3
+Three-Address Code: c = t0
+Result: 18
+---------------------------------
+Test 4: d = 8 / 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 8 / 3
+Three-Address Code: d = t0
+Result: 2
+---------------------------------
+Test 5: e = 4 + 3 * 2;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 4 + 3
+Three-Address Code: t1 = t0 * 2
+Three-Address Code: e = t1
+Result: 14
+---------------------------------
+Test 6: f = 10 / 2 - 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 2 - 3
+Three-Address Code: t1 = 10 / t0
+Three-Address Code: f = t1
+Result: -10
+---------------------------------
+Test 7: g = 3 + 4 + 5;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 4 + 5
+Three-Address Code: t1 = 3 + t0
+Three-Address Code: g = t1
+Result: 12
+---------------------------------
+Test 8: h = 10 - 2 - 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 2 - 3
+Three-Address Code: t1 = 10 - t0
+Three-Address Code: h = t1
+Result: 11
+---------------------------------
+Test 9: i = 6 * 2 * 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 6 * 2
+Three-Address Code: t1 = t0 * 3
+Three-Address Code: i = t1
+Result: 36
+---------------------------------
+Test 10: j = 12 / 2 / 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 12 / 2
+Three-Address Code: t1 = t0 / 3
+Three-Address Code: j = t1
+Result: 3
+---------------------------------
+Test 11: k = (4 + 3) * 2;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 4 + 3
+Three-Address Code: t1 = t0 * 2
+Three-Address Code: k = t1
+Result: 14
+---------------------------------
+Test 12: l = (10 - 2) / 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 10 - 2
+Three-Address Code: t1 = t0 / 3
+Three-Address Code: l = t1
+Result: 2
+---------------------------------
+Test 13: m = 3 + 4 * (2 - 1);
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 3 + 4
+Three-Address Code: t1 = 2 - 1
+Three-Address Code: t2 = t0 * t1
+Three-Address Code: m = t2
+Result: 7
+---------------------------------
+Test 14: n = (6 / 2) + (8 - 3) * 2;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 6 / 2
+Three-Address Code: t1 = 8 - 3
+Three-Address Code: t2 = t0 + t1
+Three-Address Code: t3 = t2 * 2
+Three-Address Code: n = t3
+Result: 16
+---------------------------------
+Test 15: o = 10 / 0;
+Error: Division by zero
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: o = error
+Result: 0
+---------------------------------
+Test 16: p = (5 - 5) * 3;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 5 - 5
+Three-Address Code: t1 = t0 * 3
+Three-Address Code: p = t1
+Result: 0
+---------------------------------

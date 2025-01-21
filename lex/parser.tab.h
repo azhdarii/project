@@ -62,9 +62,9 @@ union YYSTYPE
 
     struct expr_data {
         char* code;   // Temporary variable or value
-        double value; // Computed value (if applicable)
+        int value; // Computed value (if applicable)
     } expr_data;
-    double num;
+    int num;
     char* id; 
 
 #line 71 "parser.tab.h"

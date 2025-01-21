@@ -409,8 +409,8 @@ static const YY_CHAR yy_meta[14] =
 
 static const flex_int16_t yy_base[22] =
     {   0,
-        0,    0,   21,   22,    0,    0,   22,   22,   22,   10,
-        9,   22,    8,   22,   22,    4,    0,    6,    0,   22,
+        0,    0,   19,   20,    0,    0,   20,   20,   20,   20,
+       20,   20,    8,   20,   20,    4,    0,    6,    0,   20,
        13
     } ;
 
@@ -421,20 +421,20 @@ static const flex_int16_t yy_def[22] =
        20
     } ;
 
-static const flex_int16_t yy_nxt[36] =
+static const flex_int16_t yy_nxt[34] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-       14,   15,   16,   19,   17,   18,   19,   18,   18,   18,
-       20,    3,   20,   20,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,   20,   20
+       14,   15,   16,   19,   17,   18,   19,   18,   20,    3,
+       20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
+       20,   20,   20
     } ;
 
-static const flex_int16_t yy_chk[36] =
+static const flex_int16_t yy_chk[34] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,   16,   21,   18,   16,   13,   11,   10,
-        3,   20,   20,   20,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,   20,   20
+        1,    1,    1,   16,   21,   18,   16,   13,    3,   20,
+       20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
+       20,   20,   20
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -714,7 +714,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 22 );
+		while ( yy_base[yy_current_state] != 20 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];

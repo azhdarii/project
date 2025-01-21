@@ -12,7 +12,7 @@
 
 
 digit [0-9]
-number [+-]?{digit}+ 
+number {digit}+ 
 letter [A-Za-z]
 id {letter}({letter}|{digit})*
 ws [ \t\n]+

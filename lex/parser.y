@@ -20,15 +20,15 @@ extern char *yytext;
 %}
 
 %token ID NUMBER
-%right '+' '-'
 %left '*' '/'
+%right '+' '-'
 
 %union {
     struct expr_data {
         char* code;   // Temporary variable or value
-        double value; // Computed value (if applicable)
+        int value; // Computed value (if applicable)
     } expr_data;
-    double num;
+    int num;
     char* id; 
 }
 
@@ -37,49 +37,27 @@ extern char *yytext;
 %type <num> NUMBER
 %type <id> ID
 
-
 %%
 
 stmt:
     ID '=' expr ';' {
-
-       
         char* temp = new_temp();
-        printf("Three-Address Code: %s = %s\n",$1 , $3.code);
-        printf("Result: %f\n", $3.value);
+        printf("Three-Address Code: %s = %s\n", $1, $3.code);
+        printf("Result: %d\n", $3.value);
         free($3.code);
+         YYACCEPT;
     }
     ;
 
 expr:
-    term '+' expr {
-        char* temp = new_temp();
-        printf("Three-Address Code: %s = %s + %s\n", temp, $1.code, $3.code);
-        $$ = (struct expr_data) {temp, $1.value + $3.value};
-        free($1.code);
-        free($3.code);
-    }
-    | term '-' expr {
-        char* temp = new_temp();
-        printf("Three-Address Code: %s = %s - %s\n", temp, $1.code, $3.code);
-        $$ = (struct expr_data) {temp, $1.value - $3.value};
-        free($1.code);
-        free($3.code);
-    }
-    | term {
-        $$ = $1;
-    }
-    ;
-
-term:
-    term '*' factor {
+    expr '*' term {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s * %s\n", temp, $1.code, $3.code);
         $$ = (struct expr_data) {temp, $1.value * $3.value};
         free($1.code);
         free($3.code);
     }
-    | term '/' factor {
+    | expr '/' term {
         if ($3.value == 0) {
             yyerror("Division by zero");
             $$ = (struct expr_data) {strdup("error"), 0.0};
@@ -88,6 +66,25 @@ term:
             printf("Three-Address Code: %s = %s / %s\n", temp, $1.code, $3.code);
             $$ = (struct expr_data) {temp, $1.value / $3.value};
         }
+        free($1.code);
+        free($3.code);
+    }
+    | term {
+        $$ = $1;
+    }
+    ;
+term:
+    factor '+' term {
+        char* temp = new_temp();
+        printf("Three-Address Code: %s = %s + %s\n", temp, $1.code, $3.code);
+        $$ = (struct expr_data) {temp, $1.value + $3.value};
+        free($1.code);
+        free($3.code);
+    }
+    | factor '-' term {
+        char* temp = new_temp();
+        printf("Three-Address Code: %s = %s - %s\n", temp, $1.code, $3.code);
+        $$ = (struct expr_data) {temp, $1.value - $3.value};
         free($1.code);
         free($3.code);
     }
@@ -108,7 +105,7 @@ factor:
 %%
 
 int main() {
-    printf("Enter an assignment expression (e.g., x = 3 + 2 * (4 - 1);):\n");
+    printf("Enter an assignment expression (e.g., x = 3 * 4 + 2;):\n");
     yyparse();
     return 0;
 }
