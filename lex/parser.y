@@ -100,6 +100,23 @@ factor:
     | NUMBER {
         $$ = (struct expr_data) {strdup(yytext), $1};
     }
+     | '-' NUMBER { // Handle unary minus for numbers
+        char* temp = new_temp();
+        printf("Three-Address Code: %s = -%s\n", temp, yytext);
+        $$ = (struct expr_data) {temp, -$2};
+    }
+    | '+' NUMBER { // Handle unary plus for numbers
+        $$ = (struct expr_data) {strdup(yytext), $2};
+    }
+    | '-' '(' expr ')' { // Handle unary minus for parenthesized expressions
+        char* temp = new_temp();
+        printf("Three-Address Code: %s = -%s\n", temp, $3.code);
+        $$ = (struct expr_data) {temp, -$3.value};
+        free($3.code);
+    }
+    | '+' '(' expr ')' { // Handle unary plus for parenthesized expressions
+        $$ = $3; // Pass through as unary plus doesn't change the value
+    }
     ;
 
 %%
