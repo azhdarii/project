@@ -1,0 +1,28 @@
+Running tests for the parser
+---------------------------------
+Test 1: a = 30+21/6*14;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 30 + 12
+Three-Address Code: t1 = t0 / 6
+Three-Address Code: t2 = t1 * 41
+Three-Address Code: a = t2
+Result: 461
+---------------------------------
+Test 2: b = 20*(24/6)+45 -60;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 42 / 6
+Three-Address Code: t1 = 54 - 60
+Three-Address Code: t2 = t0 + t1
+Three-Address Code: t3 = 20 * t2
+Three-Address Code: b = t3
+Result: 20
+---------------------------------
+Test 3: c = 23* 24/(5 +45)-16;
+Enter an assignment expression (e.g., x = 3 * 4 + 2;):
+Three-Address Code: t0 = 32 * 42
+Three-Address Code: t1 = 5 + 54
+Three-Address Code: t2 = t1 - 61
+Three-Address Code: t3 = t0 / t2
+Three-Address Code: c = t3
+Result: 301
+---------------------------------

@@ -80,14 +80,19 @@ char* new_temp() {
     return temp;
 }
 
+
+
+
 // Forward declaration
 int yylex();
 void yyerror(const char *s);
 
+int reverse(int num);
+
 extern char *yytext;
 
 
-#line 91 "parser.tab.c"
+#line 96 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -144,16 +149,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "parser.y"
+#line 34 "parser.y"
 
     struct expr_data {
         char* code;   // Temporary variable or value
         int value; // Computed value (if applicable)
     } expr_data;
-    int num;
     char* id; 
 
-#line 157 "parser.tab.c"
+#line 161 "parser.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -472,16 +476,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   31
+#define YYLAST   22
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  13
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  12
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  31
+#define YYNSTATES  25
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   259
@@ -500,7 +504,7 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      11,    12,     5,     7,     2,     8,     2,     6,     2,     2,
+      11,    12,     7,     5,     2,     6,     2,     8,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,    10,
        2,     9,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -528,8 +532,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    43,    43,    53,    60,    72,    77,    84,    91,    97,
-     100,   103,   108,   111,   117
+       0,    50,    50,    60,    69,    83,    88,    97,   106,   112,
+     116,   119,   123
 };
 #endif
 
@@ -538,8 +542,8 @@ static const yytype_int8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "ID", "NUMBER", "'*'", "'/'", "'+'",
-  "'-'", "'='", "';'", "'('", "')'", "$accept", "stmt", "expr", "term",
+  "$end", "error", "$undefined", "ID", "NUMBER", "'+'", "'-'", "'*'",
+  "'/'", "'='", "';'", "'('", "')'", "$accept", "stmt", "expr", "term",
   "factor", YY_NULLPTR
 };
 #endif
@@ -549,12 +553,12 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_int16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,    42,    47,    43,    45,    61,
+       0,   256,   257,   258,   259,    43,    45,    42,    47,    61,
       59,    40,    41
 };
 # endif
 
-#define YYPACT_NINF (-7)
+#define YYPACT_NINF (-6)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -568,10 +572,9 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      15,    13,    26,    -4,    -7,    -7,     9,    12,    -4,    19,
-      -7,    -6,    -7,    -4,    -7,    -4,     0,    -4,    -4,    -7,
-      -4,    -4,     3,     5,    -7,    -7,    -7,    -7,    -7,    -7,
-      -7
+       0,    -1,     6,    -4,    -6,    -6,    -4,    -4,    -4,     8,
+      -6,    14,    -6,    -6,    -3,    -4,    -4,    -6,    -4,    -4,
+      -6,    -6,    -6,    -6,    -6
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -580,15 +583,14 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     1,    10,     0,     0,     0,     0,
-       5,     8,    12,     0,    11,     0,     0,     0,     0,     2,
-       0,     0,     0,     0,     9,     3,     4,     6,     7,    14,
-      13
+       5,     8,    12,    11,     0,     0,     0,     2,     0,     0,
+       9,     3,     4,     6,     7
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,    -7,     6,    10,    -7
+      -6,    -6,     4,    -5,    15
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -602,42 +604,39 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       5,    20,    21,     6,     7,    17,    18,     8,    17,    18,
-      17,    18,    24,    12,    16,    29,    14,    30,     1,    22,
-      13,    23,     3,    15,    17,    18,     4,    25,    26,    19,
-      27,    28
+       5,     6,     7,     1,    15,    16,     4,     8,     3,    20,
+      21,    22,    14,    23,    24,    15,    16,     0,    17,    18,
+      19,    12,    13
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,     7,     8,     7,     8,     5,     6,    11,     5,     6,
-       5,     6,    12,     4,     8,    12,     4,    12,     3,    13,
-      11,    15,     9,    11,     5,     6,     0,    17,    18,    10,
-      20,    21
+       4,     5,     6,     3,     7,     8,     0,    11,     9,    12,
+      15,    16,     8,    18,    19,     7,     8,    -1,    10,     5,
+       6,     6,     7
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    14,     9,     0,     4,     7,     8,    11,    15,
-      16,    17,     4,    11,     4,    11,    15,     5,     6,    10,
-       7,     8,    15,    15,    12,    16,    16,    16,    16,    12,
-      12
+       0,     3,    14,     9,     0,     4,     5,     6,    11,    15,
+      16,    17,    17,    17,    15,     7,     8,    10,     5,     6,
+      12,    16,    16,    16,    16
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
        0,    13,    14,    15,    15,    15,    16,    16,    16,    17,
-      17,    17,    17,    17,    17
+      17,    17,    17
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     4,     3,     3,     1,     3,     3,     1,     3,
-       1,     2,     2,     4,     4
+       1,     2,     2
 };
 
 
@@ -1333,7 +1332,7 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 43 "parser.y"
+#line 50 "parser.y"
                     {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s\n", (yyvsp[-3].id), (yyvsp[-1].expr_data).code);
@@ -1341,23 +1340,25 @@ yyreduce:
         free((yyvsp[-1].expr_data).code);
          YYACCEPT;
     }
-#line 1345 "parser.tab.c"
+#line 1344 "parser.tab.c"
     break;
 
   case 3:
-#line 53 "parser.y"
+#line 60 "parser.y"
                   {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s * %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
-        (yyval.expr_data) = (struct expr_data) {temp, (yyvsp[-2].expr_data).value * (yyvsp[0].expr_data).value};
+
+         int rev=reverse( (yyvsp[-2].expr_data).value * (yyvsp[0].expr_data).value);
+        (yyval.expr_data) = (struct expr_data) {temp,rev };
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1357 "parser.tab.c"
+#line 1358 "parser.tab.c"
     break;
 
   case 4:
-#line 60 "parser.y"
+#line 69 "parser.y"
                     {
         if ((yyvsp[0].expr_data).value == 0) {
             yyerror("Division by zero");
@@ -1365,109 +1366,98 @@ yyreduce:
         } else {
             char* temp = new_temp();
             printf("Three-Address Code: %s = %s / %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
-            (yyval.expr_data) = (struct expr_data) {temp, (yyvsp[-2].expr_data).value / (yyvsp[0].expr_data).value};
+
+              int rev=reverse( (yyvsp[-2].expr_data).value / (yyvsp[0].expr_data).value);
+            (yyval.expr_data) = (struct expr_data) {temp, rev};
         }
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1374 "parser.tab.c"
+#line 1377 "parser.tab.c"
     break;
 
   case 5:
-#line 72 "parser.y"
+#line 83 "parser.y"
            {
         (yyval.expr_data) = (yyvsp[0].expr_data);
     }
-#line 1382 "parser.tab.c"
+#line 1385 "parser.tab.c"
     break;
 
   case 6:
-#line 77 "parser.y"
+#line 88 "parser.y"
                     {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s + %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
-        (yyval.expr_data) = (struct expr_data) {temp, (yyvsp[-2].expr_data).value + (yyvsp[0].expr_data).value};
+
+          int rev=reverse( (yyvsp[-2].expr_data).value + (yyvsp[0].expr_data).value);
+        (yyval.expr_data) = (struct expr_data) {temp, rev};
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1394 "parser.tab.c"
+#line 1399 "parser.tab.c"
     break;
 
   case 7:
-#line 84 "parser.y"
+#line 97 "parser.y"
                       {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s - %s\n", temp, (yyvsp[-2].expr_data).code, (yyvsp[0].expr_data).code);
-        (yyval.expr_data) = (struct expr_data) {temp, (yyvsp[-2].expr_data).value - (yyvsp[0].expr_data).value};
+
+          int rev=reverse(  (yyvsp[-2].expr_data).value - (yyvsp[0].expr_data).value);
+        (yyval.expr_data) = (struct expr_data) {temp,rev};
         free((yyvsp[-2].expr_data).code);
         free((yyvsp[0].expr_data).code);
     }
-#line 1406 "parser.tab.c"
+#line 1413 "parser.tab.c"
     break;
 
   case 8:
-#line 91 "parser.y"
+#line 106 "parser.y"
              {
         (yyval.expr_data) = (yyvsp[0].expr_data);
     }
-#line 1414 "parser.tab.c"
+#line 1421 "parser.tab.c"
     break;
 
   case 9:
-#line 97 "parser.y"
+#line 112 "parser.y"
                  {
-        (yyval.expr_data) = (yyvsp[-1].expr_data);
-    }
-#line 1422 "parser.tab.c"
-    break;
-
-  case 10:
-#line 100 "parser.y"
-             {
-        (yyval.expr_data) = (struct expr_data) {strdup(yytext), (yyvsp[0].num)};
+        
+        (yyval.expr_data)=(yyvsp[-1].expr_data);
     }
 #line 1430 "parser.tab.c"
     break;
 
-  case 11:
-#line 103 "parser.y"
-                  { // Handle unary minus for numbers
-        char* temp = new_temp();
-        printf("Three-Address Code: %s = -%s\n", temp, yytext);
-        (yyval.expr_data) = (struct expr_data) {temp, -(yyvsp[0].num)};
+  case 10:
+#line 116 "parser.y"
+             {
+        (yyval.expr_data) = (struct expr_data) {strdup((yyvsp[0].expr_data).code), (yyvsp[0].expr_data).value};
     }
-#line 1440 "parser.tab.c"
+#line 1438 "parser.tab.c"
+    break;
+
+  case 11:
+#line 119 "parser.y"
+                   {
+           (yyvsp[0].expr_data).value=-(yyvsp[0].expr_data).value; 
+           (yyval.expr_data) =(yyvsp[0].expr_data);
+    }
+#line 1447 "parser.tab.c"
     break;
 
   case 12:
-#line 108 "parser.y"
-                 { // Handle unary plus for numbers
-        (yyval.expr_data) = (struct expr_data) {strdup(yytext), (yyvsp[0].num)};
+#line 123 "parser.y"
+                  {
+      
+            (yyval.expr_data) = (yyvsp[0].expr_data); 
+        
     }
-#line 1448 "parser.tab.c"
-    break;
-
-  case 13:
-#line 111 "parser.y"
-                       { // Handle unary minus for parenthesized expressions
-        char* temp = new_temp();
-        printf("Three-Address Code: %s = -%s\n", temp, (yyvsp[-1].expr_data).code);
-        (yyval.expr_data) = (struct expr_data) {temp, -(yyvsp[-1].expr_data).value};
-        free((yyvsp[-1].expr_data).code);
-    }
-#line 1459 "parser.tab.c"
-    break;
-
-  case 14:
-#line 117 "parser.y"
-                       { // Handle unary plus for parenthesized expressions
-        (yyval.expr_data) = (yyvsp[-1].expr_data); // Pass through as unary plus doesn't change the value
-    }
-#line 1467 "parser.tab.c"
+#line 1457 "parser.tab.c"
     break;
 
 
-#line 1471 "parser.tab.c"
+#line 1461 "parser.tab.c"
 
       default: break;
     }
@@ -1699,7 +1689,22 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 122 "parser.y"
+#line 130 "parser.y"
+
+
+int reverse(int num){
+     if (num % 10 == 0) {
+       return num;    
+    } else {
+        int reversed = 0, original = num;
+        while (original != 0) {
+            reversed = reversed * 10 + original % 10;
+            original /= 10;
+        }
+        return reversed;
+    }
+}
+
 
 
 int main() {

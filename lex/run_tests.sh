@@ -1,29 +1,16 @@
 #!/bin/bash
 
 # Path to your parser executable
-PARSER="./parser"  # Replace with the actual name of your parser executable
+PARSER="./compiler"  # Replace with the actual name of your parser executable
 
 # Output log file
 LOG_FILE="test_results.log"
 
 # Test cases
 declare -a TEST_CASES=(
-    "a = 3 + 4;"
-    "b = 10 - 5;"
-    "c = 6 * 3;"
-    "d = 8 / 3;"
-    "e = 4 + 3 * 2;"
-    "f = 10 / 2 - 3;"
-    "g = 3 + 4 + 5;"
-    "h = 10 - 2 - 3;"
-    "i = 6 * 2 * 3;"
-    "j = 12 / 2 / 3;"
-    "k = (4 + 3) * 2;"
-    "l = (10 - 2) / 3;"
-    "m = 3 + 4 * (2 - 1);"
-    "n = (6 / 2) + (8 - 3) * 2;"
-    "o = 10 / 0;"
-    "p = (5 - 5) * 3;"
+   "a = 30+21/6*14;"
+   "b = 20*(24/6)+45 -60;"
+   "c = 23* 24/(5 +45)-16;"
 )
 
 # Start logging

@@ -457,7 +457,7 @@ char *yytext;
 #include <stdlib.h>
 #include "parser.tab.h" 
 
-
+void reverse_string(char* str);
 
 
 #line 464 "lex.yy.c"
@@ -681,7 +681,8 @@ YY_DECL
 #line 21 "lexer.l"
 
 
-#line 685 "lex.yy.c"
+
+#line 686 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -740,7 +741,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "lexer.l"
+#line 24 "lexer.l"
 { 
     yylval.id=strdup(yytext);
     return ID; 
@@ -748,67 +749,82 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 29 "lexer.l"
 { 
     int num = atoi(yytext);
     if (num % 10 == 0) {
-        yylval.num = num; 
+        yylval.expr_data.value = num;
+        yylval.expr_data.code = strdup(yytext);
+        
+        
     } else {
         int reversed = 0, original = num;
         while (original != 0) {
             reversed = reversed * 10 + original % 10;
             original /= 10;
         }
-        yylval.num = reversed; 
+        
+        yylval.expr_data.value = reversed;
+
+        yylval.expr_data.code = malloc(strlen(yytext) + 1); 
+
+        if (yylval.expr_data.code == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(1);
+        }
+        strcpy(yylval.expr_data.code, yytext);
+        reverse_string(yylval.expr_data.code);
+       
+  
     }
     return NUMBER;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 43 "lexer.l"
+#line 59 "lexer.l"
 {  
     return '='; 
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 46 "lexer.l"
+#line 62 "lexer.l"
 { 
     return '+'; 
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 49 "lexer.l"
+#line 65 "lexer.l"
 { 
     return '-'; 
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 52 "lexer.l"
+#line 68 "lexer.l"
 { 
     return '*'; 
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 55 "lexer.l"
+#line 71 "lexer.l"
 { 
     return '/'; 
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 59 "lexer.l"
+#line 75 "lexer.l"
 { 
     return '('; 
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 62 "lexer.l"
+#line 78 "lexer.l"
 { 
     return ')'; 
 }
@@ -816,31 +832,31 @@ YY_RULE_SETUP
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 66 "lexer.l"
+#line 82 "lexer.l"
 { 
     /* Ignore whitespace */ 
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 70 "lexer.l"
+#line 86 "lexer.l"
 {
     return ';';
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 74 "lexer.l"
+#line 90 "lexer.l"
 { 
     printf("Unexpected character: %s\n", yytext); 
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 78 "lexer.l"
+#line 94 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 844 "lex.yy.c"
+#line 860 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1845,8 +1861,17 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "lexer.l"
+#line 94 "lexer.l"
 
 
+
+void reverse_string(char* str) {
+    int len = strlen(str);
+    for (int i = 0; i < len / 2; i++) {
+        char temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+}
 
 

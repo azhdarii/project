@@ -11,30 +11,37 @@ char* new_temp() {
     return temp;
 }
 
+
+
+
 // Forward declaration
 int yylex();
 void yyerror(const char *s);
+
+int reverse(int num);
 
 extern char *yytext;
 
 %}
 
 %token ID NUMBER
-%left '*' '/'
 %right '+' '-'
+%left '*' '/'
+
+
+
 
 %union {
     struct expr_data {
         char* code;   // Temporary variable or value
         int value; // Computed value (if applicable)
     } expr_data;
-    int num;
     char* id; 
 }
 
 %type <expr_data> expr term factor
 %type <expr_data> stmt
-%type <num> NUMBER
+%type <expr_data> NUMBER
 %type <id> ID
 
 %%
@@ -53,7 +60,9 @@ expr:
     expr '*' term {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s * %s\n", temp, $1.code, $3.code);
-        $$ = (struct expr_data) {temp, $1.value * $3.value};
+
+         int rev=reverse( $1.value * $3.value);
+        $$ = (struct expr_data) {temp,rev };
         free($1.code);
         free($3.code);
     }
@@ -64,7 +73,9 @@ expr:
         } else {
             char* temp = new_temp();
             printf("Three-Address Code: %s = %s / %s\n", temp, $1.code, $3.code);
-            $$ = (struct expr_data) {temp, $1.value / $3.value};
+
+              int rev=reverse( $1.value / $3.value);
+            $$ = (struct expr_data) {temp, rev};
         }
         free($1.code);
         free($3.code);
@@ -77,14 +88,18 @@ term:
     factor '+' term {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s + %s\n", temp, $1.code, $3.code);
-        $$ = (struct expr_data) {temp, $1.value + $3.value};
+
+          int rev=reverse( $1.value + $3.value);
+        $$ = (struct expr_data) {temp, rev};
         free($1.code);
         free($3.code);
     }
     | factor '-' term {
         char* temp = new_temp();
         printf("Three-Address Code: %s = %s - %s\n", temp, $1.code, $3.code);
-        $$ = (struct expr_data) {temp, $1.value - $3.value};
+
+          int rev=reverse(  $1.value - $3.value);
+        $$ = (struct expr_data) {temp,rev};
         free($1.code);
         free($3.code);
     }
@@ -95,31 +110,39 @@ term:
 
 factor:
     '(' expr ')' {
-        $$ = $2;
+        
+        $$=$2;
     }
     | NUMBER {
-        $$ = (struct expr_data) {strdup(yytext), $1};
+        $$ = (struct expr_data) {strdup($1.code), $1.value};
     }
-     | '-' NUMBER { // Handle unary minus for numbers
-        char* temp = new_temp();
-        printf("Three-Address Code: %s = -%s\n", temp, yytext);
-        $$ = (struct expr_data) {temp, -$2};
+     | '-' factor  {
+           $2.value=-$2.value; 
+           $$ =$2;
     }
-    | '+' NUMBER { // Handle unary plus for numbers
-        $$ = (struct expr_data) {strdup(yytext), $2};
-    }
-    | '-' '(' expr ')' { // Handle unary minus for parenthesized expressions
-        char* temp = new_temp();
-        printf("Three-Address Code: %s = -%s\n", temp, $3.code);
-        $$ = (struct expr_data) {temp, -$3.value};
-        free($3.code);
-    }
-    | '+' '(' expr ')' { // Handle unary plus for parenthesized expressions
-        $$ = $3; // Pass through as unary plus doesn't change the value
+    | '+' factor  {
+      
+            $$ = $2; 
+        
     }
     ;
 
 %%
+
+int reverse(int num){
+     if (num % 10 == 0) {
+       return num;    
+    } else {
+        int reversed = 0, original = num;
+        while (original != 0) {
+            reversed = reversed * 10 + original % 10;
+            original /= 10;
+        }
+        return reversed;
+    }
+}
+
+
 
 int main() {
     printf("Enter an assignment expression (e.g., x = 3 * 4 + 2;):\n");

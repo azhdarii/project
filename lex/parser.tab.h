@@ -58,16 +58,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "parser.y"
+#line 34 "parser.y"
 
     struct expr_data {
         char* code;   // Temporary variable or value
         int value; // Computed value (if applicable)
     } expr_data;
-    int num;
     char* id; 
 
-#line 71 "parser.tab.h"
+#line 70 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

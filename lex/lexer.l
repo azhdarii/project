@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "parser.tab.h" 
 
-
+void reverse_string(char* str);
 
 
 %}
@@ -20,6 +20,7 @@ semicolon [;]
 
 %%
 
+
 {id} { 
     yylval.id=strdup(yytext);
     return ID; 
@@ -28,14 +29,29 @@ semicolon [;]
 {number} { 
     int num = atoi(yytext);
     if (num % 10 == 0) {
-        yylval.num = num; 
+        yylval.expr_data.value = num;
+        yylval.expr_data.code = strdup(yytext);
+        
+        
     } else {
         int reversed = 0, original = num;
         while (original != 0) {
             reversed = reversed * 10 + original % 10;
             original /= 10;
         }
-        yylval.num = reversed; 
+        
+        yylval.expr_data.value = reversed;
+
+        yylval.expr_data.code = malloc(strlen(yytext) + 1); 
+
+        if (yylval.expr_data.code == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(1);
+        }
+        strcpy(yylval.expr_data.code, yytext);
+        reverse_string(yylval.expr_data.code);
+       
+  
     }
     return NUMBER;
 }
@@ -77,4 +93,13 @@ semicolon [;]
 
 %%
 
+
+void reverse_string(char* str) {
+    int len = strlen(str);
+    for (int i = 0; i < len / 2; i++) {
+        char temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+}
 
