@@ -11,11 +11,9 @@ char* new_temp() {
     return temp;
 }
 
-
-
-
 // Forward declaration
 int yylex();
+
 void yyerror(const char *s);
 
 int reverse(int num);

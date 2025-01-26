@@ -365,8 +365,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[21] =
     {   0,
-        0,    0,   14,   12,   10,   10,    8,    9,    6,    4,
-        5,    7,    2,   11,    3,    1,   10,    2,    1,    0
+        0,    0,   14,   12,   11,   11,    8,    9,    6,    4,
+        5,    7,    2,   10,    3,    1,   11,    2,    1,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -830,18 +830,18 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case 10:
-/* rule 10 can match eol */
 YY_RULE_SETUP
-#line 82 "lexer.l"
-{ 
-    /* Ignore whitespace */ 
+#line 81 "lexer.l"
+{
+    return ';';
 }
 	YY_BREAK
 case 11:
+/* rule 11 can match eol */
 YY_RULE_SETUP
-#line 86 "lexer.l"
-{
-    return ';';
+#line 84 "lexer.l"
+{ 
+    /* Ignore whitespace */ 
 }
 	YY_BREAK
 case 12:

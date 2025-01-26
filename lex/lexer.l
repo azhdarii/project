@@ -16,10 +16,9 @@ number {digit}+
 letter [A-Za-z]
 id {letter}({letter}|{digit})*
 ws [ \t\n]+
-semicolon [;]
+
 
 %%
-
 
 {id} { 
     yylval.id=strdup(yytext);
@@ -78,13 +77,11 @@ semicolon [;]
 ")" { 
     return ')'; 
 }
-
+";" {
+    return ';';
+}
 {ws} { 
     /* Ignore whitespace */ 
-}
-
-{semicolon} {
-    return ';';
 }
 
 . { 
