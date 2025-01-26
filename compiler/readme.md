@@ -1,6 +1,6 @@
 
  
-`lex` file is an input file for the `Lex` tool, which is used to generate a **Lexical Analyzer** (lexer). 
+`lexer.l` file is an input file for the `Lex` tool, which is used to generate a **Lexical Analyzer** (lexer). 
 The lexical analyzer is the first stage in the compilation process,
 and its job is to read the input text and convert it into a series of **tokens**.
 Each token is a meaningful unit of the input text, such as numbers, operators, identifiers, etc.
